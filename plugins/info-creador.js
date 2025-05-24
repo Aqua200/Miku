@@ -5,7 +5,7 @@ import PhoneNumber from 'awesome-phonenumber';
 // o defínelas aquí si es un bot simple.                                         //
 // ASEGÚRATE DE REEMPLAZAR ESTOS VALORES CON LOS REALES                         //
 // ---------------------------------------------------------------------------------//
-const ownerNumber = '1234567890'; // Número del propietario SIN el '+' o '@s.whatsapp.net', solo los dígitos. Ejemplo: '521xxxxxxxxxx'
+const ownerNumber = '5216631079388'; // Número del propietario SIN el '+' o '@s.whatsapp.net', solo los dígitos. Ejemplo: '521xxxxxxxxxx'
 const ownerName = 'Tu Nombre Real o Alias'; // Nombre del propietario como quieres que aparezca
 const botName = 'NombreDeTuBot'; // Nombre de tu bot
 const ownerEmail = 'propietario@example.com'; // Email del propietario
