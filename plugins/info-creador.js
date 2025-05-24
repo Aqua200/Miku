@@ -31,7 +31,7 @@ let handler = async (m, { conn }) => {
   const contactData = [
     [
       ownerNumber,                          
-      `(${currentOwnerName})`, // Mostrará el nombre obtenido o "Propietario"
+      `ᰔᩚ Propietario`, // Mostrará el nombre obtenido o "Propietario"
       '❀ No Hacer Spam'                     
     ]
   ];
