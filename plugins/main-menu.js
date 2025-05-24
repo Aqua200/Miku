@@ -24,8 +24,8 @@ let handler = async (m, { conn, args }) => {
 ┊  ❀  *Bot:*  ${(conn.user.jid == global.conn.user.jid ? 'Princesa Principal 👑' : 'Sub bot ✨')}
 ┊  ❀  *Activa Desde:*  ${uptime}
 ┊  ❀  *Comunidad:*  ${totalreg} usuarios bellos
-┊  ❀  *Hechizos (Comandos):*  ${totalCommands}
-┊  ❀  *Conexión Mágica:*  Baileys (Multi-Device)
+┊  ❀  *Total de comandos:*  ${totalCommands}
+┊  ❀  *Conexión:*  Baileys (Multi-Device)
 ╰┈─────── ୨୧ ───────┈╯
 
 ╭┈─── ୨♡୧ ───┈╮
