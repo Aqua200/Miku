@@ -19,12 +19,9 @@ let handler = async (m, { conn, args }) => {
 ¡Holi! Soy *${botname}* 
 
 ╭┈─────── ୨୧ ───────┈╮
-┊ ｡ﾟﾟ･｡･ﾟﾟ｡  𝐈𝐍𝐅𝐎 𝐃𝐄 𝐋𝐀 𝐁𝐎𝐓  ｡ﾟﾟ･｡･ﾟﾟ｡
-┊ ﾟ。       🌸        ｡ﾟ
-┊      ﾟ･｡･ﾟ
 ┊  ❀  *Usuario:*  @${userId.split('@')[0]}
-┊  ❀  *Modo:*  Público con ✨chispitas✨
-┊  ❀  *Bot:*  ${(conn.user.jid == global.conn.user.jid ? 'Princesa Principal 👑' : 'Estrellita Ayudante ⭐')}
+┊  ❀  *Modo:*  Público
+┊  ❀  *Bot:*  ${(conn.user.jid == global.conn.user.jid ? 'Princesa Principal 👑' : 'Sub bot ✨')}
 ┊  ❀  *Activa Desde:*  ${uptime}
 ┊  ❀  *Comunidad:*  ${totalreg} usuarios bellos
 ┊  ❀  *Hechizos (Comandos):*  ${totalCommands}
@@ -32,7 +29,7 @@ let handler = async (m, { conn, args }) => {
 ╰┈─────── ୨୧ ───────┈╯
 
 ╭┈─── ୨♡୧ ───┈╮
-┊✨ *¿Como ser un sub-bot?* ✨
+┊*¿Como ser un sub-bot?* 
 ┊  Usa  ` + "`#qr`" + `  o  ` + "`#code`" + `
 ┊  ¡Convierte en un sub-bot!
 ╰┈─── ୨♡୧ ───┈╯
