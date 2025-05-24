@@ -1,36 +1,28 @@
 import PhoneNumber from 'awesome-phonenumber';
 
-// ---------------------------------------------------------------------------------//
-//         CONFIGURA ESTAS VARIABLES CON TU INFORMACIÓN REAL                       //
-// ---------------------------------------------------------------------------------//
-const ownerNumber = '5216631079388'; // Número del propietario SIN el '+' o '@s.whatsapp.net'.
-const ownerName = 'Neykoor 💜';     // Nombre del propietario como quieres que aparezca.
-// Ya no se necesitan otras variables de configuración para esta versión simplificada.
-// ---------------------------------------------------------------------------------//
-
+const ownerNumber = '5216631079388'; // SIN '+' o '@s.whatsapp.net'
+const ownerName = 'Neykoor 💜';
 
 let handler = async (m, { conn }) => {
-  m.react('🩵');
+  m.react?.('🩵');
 
   const ownerJid = `${ownerNumber}@s.whatsapp.net`;
   const botJid = conn.user.jid;
-
-  // Obtener el nombre actual del owner desde WhatsApp, si no, usa el configurado.
-  const currentOwnerName = await conn.getName(ownerJid) || ownerName;
+  const currentOwnerName = await conn.getName(ownerJid).catch(() => ownerName);
 
   await sendContactArray(conn, m.chat, [
     [
-      ownerNumber,                          // Número del propietario
-      `ᰔᩚ Propietario`,          // Nombre a mostrar para el propietario
-      ' ❀ No Hacer Spam '         // Organización/descripción para el propietario
+      ownerNumber,
+      'ᰔᩚ Propietario',
+      '❀ No Hacer Spam'
     ],
     [
-      botJid.split('@')[0],                 // Número del bot
-      ' ✦ Es Un Bot',                   // Nombre genérico para el bot
-      '✨ Asistente Virtual ✨'             // Organización/descripción para el bot
+      botJid.split('@')[0],
+      '✦ Es Un Bot',
+      '✨ Asistente Virtual ✨'
     ]
   ], m);
-}
+};
 
 handler.help = ["creador", "owner"];
 handler.tags = ["info"];
@@ -38,26 +30,20 @@ handler.command = ['owner', 'creator', 'creador', 'dueño'];
 
 export default handler;
 
-async function sendContactArray(conn, jid, data, quoted, options) {
-  if (!Array.isArray(data[0]) && typeof data[0] === 'string') data = [data];
-  let contacts = [];
-  // Ahora data solo contendrá [number, displayName, organization]
-  for (let [number, displayName, organization] of data) {
-    number = number.replace(/[^0-9]/g, ''); // Asegurar que solo sean números
-    let waid = number;
-    let formattedPhoneNumber;
-    try {
-      if (number) { // Solo intentar formatear si hay un número
-        formattedPhoneNumber = PhoneNumber('+' + number).getNumber('international');
-      } else {
-        formattedPhoneNumber = ''; // Evitar errores si el número es inválido o vacío
-      }
-    } catch (e) {
-      formattedPhoneNumber = number ? '+' + number : ''; // Fallback
-    }
+async function sendContactArray(conn, jid, data, quoted, options = {}) {
+  if (!Array.isArray(data[0])) data = [data];
 
-    // vCard simplificado
-    let vcard = `
+  const contacts = data.map(([number, displayName, organization]) => {
+    number = number.replace(/\D/g, '');
+    const waid = number;
+    let formattedPhoneNumber = '+' + number;
+
+    try {
+      const pn = PhoneNumber('+' + number);
+      if (pn.isValid()) formattedPhoneNumber = pn.getNumber('international');
+    } catch {}
+
+    const vcard = `
 BEGIN:VCARD
 VERSION:3.0
 N:;${displayName.replace(/\n/g, '\\n')};;;
@@ -66,16 +52,13 @@ ORG:${(organization || '').replace(/\n/g, '\\n')}
 TEL;type=CELL;type=VOICE;waid=${waid}:${formattedPhoneNumber}
 END:VCARD`.trim();
 
-    contacts.push({ vcard, displayName: displayName });
-  }
-  return await conn.sendMessage(jid, {
-    contacts: {
-      displayName: (contacts.length > 1 ? `👥 Contactos Clave` : contacts[0]?.displayName) || "Contacto",
-      contacts,
-    }
-  }, {
-    quoted,
-    ...options
+    return { vcard, displayName };
   });
-}
 
+  return conn.sendMessage(jid, {
+    contacts: {
+      displayName: contacts.length > 1 ? '👥 Contactos Clave' : contacts[0]?.displayName || 'Contacto',
+      contacts
+    }
+  }, { quoted, ...options });
+}
