@@ -53,7 +53,7 @@ let handler = async (m, { conn }) => {
     ],
     [
       conn.user.jid.split('@')[0],
-      `(${botName})`,
+      `𝙷𝚊𝚝𝚜𝚞𝚗𝚎 𝚖𝚒𝚔𝚞 🩵`,//Nombre del bot
       botPackname,
       'Bot Oficial',
       ownerEmail, // o botEmail si lo defines
