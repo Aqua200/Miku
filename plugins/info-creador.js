@@ -3,8 +3,7 @@ import PhoneNumber from 'awesome-phonenumber';
 // ---------------------------------------------------------------------------------//
 //         CONFIGURA ESTAS VARIABLES CON TU INFORMACIÓN REAL                       //
 // ---------------------------------------------------------------------------------//
-const ownerNumber = '5216631079388'; // Número del propietario SIN el '+' o '@s.whatsapp.net'.
-const ownerName = 'Neykoor 💜';     // Nombre del propietario como quieres que aparezca.
+const ownerNumber = '5216631079388'; // Número del propietario SIN el '+' o '@s.whatsapp.net'.     // Nombre del propietario como quieres que aparezca.
 // Ya no se necesitan otras variables de configuración para esta versión simplificada.
 // ---------------------------------------------------------------------------------//
 
