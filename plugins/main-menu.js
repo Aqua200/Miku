@@ -1,18 +1,15 @@
 let handler = async (m, { conn, args }) => {
     let userId = m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.sender;
-    // let user = global.db.data.users[userId]; // No se usa directamente en txt
-    // let name = conn.getName(userId); // Ya se usa
     let _uptime = process.uptime() * 1000;
-    let uptime = clockString(_uptime);
+    let uptime = clockString(_uptime); // Usará la nueva función clockString
     let totalreg = Object.keys(global.db.data.users).length;
     let totalCommands = Object.values(global.plugins).filter((v) => v.help && v.tags).length;
-    let botname = global.botname || conn.user.name || "MiLindaAsistente"; // Nombre del bot
+    let botname = global.botname || conn.user.name || "MiLindaAsistente";
 
-    // Variables para contextInfo (asegúrate que estén definidas globalmente)
     let channelRD = global.channelRD || { id: '123456789@newsletter', name: '🌸 Mi Rincón Secreto 🌸' };
     let textbot = global.textbot || `Con cariño, de ${botname} para ti~ ✨`;
-    let banner = global.banner || 'https://url.to.your/feminine_banner.jpg'; // URL de un banner bonito
-    let redes = global.redes || 'https://linktr.ee/yourbot'; // Enlace a tus redes o un linktree
+    let banner = global.banner || 'https://i.imgur.com/Ufxr0qH.jpeg'; // URL de un banner bonito (cambiado a una imagen de ejemplo)
+    let redes = global.redes || 'https://linktr.ee/tu_bot'; // Enlace a tus redes o un linktree (cambiado para ser un placeholder)
 
     let txt = `
 ｡･ﾟﾟ･ sweetly greets @${userId.split('@')[0]} ･ﾟﾟ･｡
@@ -41,9 +38,6 @@ let handler = async (m, { conn, args }) => {
 
  ୨♡୧  *#sc • #script*
 > ↳  mi repositorio oficial 
-
-
-
 
 `.trim();
 
@@ -78,14 +72,39 @@ handler.command = ['menu', 'menú', 'help', 'ayuda']
 
 export default handler;
 
+/**
+ * Convierte milisegundos a una cadena de tiempo legible (Días, Horas, Minutos, Segundos)
+ * @param {number} ms Milisegundos
+ * @returns {string} Cadena de tiempo formateada
+ */
 function clockString(ms) {
-    let h = isNaN(ms) ? '--' : Math.floor(ms / 3600000);
-    let m = isNaN(ms) ? '--' : Math.floor(ms / 60000) % 60;
-    let s = isNaN(ms) ? '--' : Math.floor(ms / 1000) % 60;
-    // Devuelve un formato más amigable como "X horas, Y minutos, Z segundos"
-    let H = h > 0 ? `${h} hora${h > 1 ? 's' : ''}, ` : '';
-    let M = m > 0 ? `${m} minuto${m > 1 ? 's' : ''}, ` : '';
-    let S = s > 0 ? `${s} segundo${s > 1 ? 's' : ''}` : '';
-    let dura = H + M + S;
-    return dura.replace(/, $/, '') || 'menos de un segundo'; // Elimina la última coma y espacio
+    if (isNaN(ms) || ms < 0) {
+        return '--'; // Retorna '--' si el valor no es un número o es negativo
+    }
+
+    const miliSegundosPorSegundo = 1000;
+    const segundosPorMinuto = 60;
+    const minutosPorHora = 60;
+    const horasPorDia = 24;
+
+    const miliSegundosPorMinuto = miliSegundosPorSegundo * segundosPorMinuto;
+    const miliSegundosPorHora = miliSegundosPorMinuto * minutosPorHora;
+    const miliSegundosPorDia = miliSegundosPorHora * horasPorDia;
+
+    let d = Math.floor(ms / miliSegundosPorDia);
+    let h = Math.floor((ms % miliSegundosPorDia) / miliSegundosPorHora);
+    let m = Math.floor((ms % miliSegundosPorHora) / miliSegundosPorMinuto);
+    let s = Math.floor((ms % miliSegundosPorMinuto) / miliSegundosPorSegundo);
+
+    let parts = [];
+    if (d > 0) parts.push(`${d} día${d > 1 ? 's' : ''}`);
+    if (h > 0) parts.push(`${h} hora${h > 1 ? 's' : ''}`);
+    if (m > 0) parts.push(`${m} minuto${m > 1 ? 's' : ''}`);
+    if (s > 0) parts.push(`${s} segundo${s > 1 ? 's' : ''}`);
+
+    if (parts.length === 0) {
+        return 'menos de un segundo';
+    }
+
+    return parts.join(', ');
 }
