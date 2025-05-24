@@ -8,7 +8,7 @@ const ownerName = 'Tu Nombre de Propietario';
 const botName = 'NombreDeTuBot';
 const ownerEmail = 'propietario@example.com';
 const ownerWebsite = 'https://github.com/tu-usuario';
-const ownerCountry = '⊹˚• Venezuela •˚⊹';
+const ownerCountry = '⊹˚• Mexico •˚⊹';
 
 const botPackname = 'Paquete del Bot';
 const botDeveloper = 'Desarrollador del Bot';
