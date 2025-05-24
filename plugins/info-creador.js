@@ -6,8 +6,8 @@ import PhoneNumber from 'awesome-phonenumber';
 // ASEGÚRATE DE REEMPLAZAR ESTOS VALORES CON LOS REALES                         //
 // ---------------------------------------------------------------------------------//
 const ownerNumber = '5216631079388'; // Número del propietario SIN el '+' o '@s.whatsapp.net', solo los dígitos. Ejemplo: '521xxxxxxxxxx'
-const ownerName = 'Tu Nombre Real o Alias'; // Nombre del propietario como quieres que aparezca
-const botName = 'NombreDeTuBot'; // Nombre de tu bot
+const ownerName = 'Neykoor 💜'; // Nombre del propietario como quieres que aparezca
+const botName = '𝙷𝚊𝚝𝚜𝚞𝚗𝚎 𝚖𝚒𝚔𝚞 ❥'; // Nombre de tu bot
 const ownerEmail = 'propietario@example.com'; // Email del propietario
 const ownerWebsite = 'https://github.com/tu-usuario'; // Website/GitHub del propietario
 const ownerCountry = '⊹˚• Venezuela •˚⊹'; // País/Región del propietario
