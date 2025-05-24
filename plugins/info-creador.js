@@ -31,7 +31,7 @@ let handler = async (m, { conn }) => {
   const contactData = [
     [
       ownerNumber,                          
-      `ᰔᩚ Propietario (${currentOwnerName})`, 
+      `ᰔᩚ Propietario`, 
       '❀ No Hacer Spam'                     
     ]
   ];
