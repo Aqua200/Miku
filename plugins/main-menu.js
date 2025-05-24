@@ -48,7 +48,7 @@ let handler = async (m, { conn, args }) => {
 >        ↳  Para saber cuánto tiempo llevo activa.
 
    ୨♡୧  *#sc • #script*
->        ↳  mi repositorio oficial 
+> ↳  mi repositorio oficial 
 
 ┈─────── ୨୧ ───────┈
 
