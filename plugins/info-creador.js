@@ -3,7 +3,7 @@ import PhoneNumber from 'awesome-phonenumber';
 // ---------------------------------------------------------------------------------//
 //         CONFIGURA ESTAS VARIABLES CON TU INFORMACIÓN REAL                       //
 // ---------------------------------------------------------------------------------//
-const ownerNumber = '1234567890'; // Número del propietario SIN '+' ni '@s.whatsapp.net'. Ejemplo: '521xxxxxxxxxx'
+const ownerNumber = '5216631079388'; // Número del propietario SIN '+' ni '@s.whatsapp.net'. Ejemplo: '521xxxxxxxxxx'
 const ownerName = 'Tu Nombre de Propietario';
 const botName = 'NombreDeTuBot';
 const ownerEmail = 'propietario@example.com';
@@ -19,7 +19,7 @@ const botChannel = 'https://whatsapp.com/channel/tu-canal';
 
 
 let handler = async (m, { conn }) => {
-  m.react('👋');
+  m.react('🩵');
 
   let ownerJid = `${ownerNumber}@s.whatsapp.net`;
   let botJid = conn.user.jid;
