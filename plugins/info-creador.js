@@ -21,12 +21,12 @@ let handler = async (m, { conn }) => {
   await sendContactArray(conn, m.chat, [
     [
       ownerNumber,                          // Número del propietario
-      `👑 ${currentOwnerName} 👑`,          // Nombre a mostrar para el propietario
-      '⚡ Propietario Principal ⚡'         // Organización/descripción para el propietario
+      `ᰔᩚ Propietario`,          // Nombre a mostrar para el propietario
+      ' ❀ No Hacer Spam '         // Organización/descripción para el propietario
     ],
     [
       botJid.split('@')[0],                 // Número del bot
-      '🤖 Es un Bot 🤖',                   // Nombre genérico para el bot
+      ' ✦ Es Un Bot',                   // Nombre genérico para el bot
       '✨ Asistente Virtual ✨'             // Organización/descripción para el bot
     ]
   ], m);
