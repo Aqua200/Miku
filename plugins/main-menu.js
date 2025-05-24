@@ -41,13 +41,13 @@ let handler = async (m, { conn, args }) => {
   ｡ﾟﾟ･｡･ﾟﾟ｡  𝐂𝐎𝐌𝐀𝐍𝐃𝐎𝐒 𝐄𝐒𝐄𝐍𝐂𝐈𝐀𝐋𝐄𝐒  ｡ﾟﾟ･｡･ﾟﾟ｡
   ﾟ。       💖        ｡ﾟ
        ﾟ･｡･ﾟ
-   ୨♡୧  *#help • #menu*
->        ↳  Muestra mi lista de comandos.
+ ୨♡୧  *#help • #menu*
+>  ↳  Muestra mi lista de comandos.
 
-   ୨♡୧  *#uptime • #runtime*
->        ↳  Para saber cuánto tiempo llevo activa.
+ ୨♡୧  *#uptime • #runtime*
+>  ↳  Para saber cuánto tiempo llevo activa.
 
-   ୨♡୧  *#sc • #script*
+ ୨♡୧  *#sc • #script*
 > ↳  mi repositorio oficial 
 
 ┈─────── ୨୧ ───────┈
