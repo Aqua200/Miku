@@ -17,7 +17,6 @@ let handler = async (m, { conn, args }) => {
     let txt = `
 ｡･ﾟﾟ･ sweetly greets @${userId.split('@')[0]} ･ﾟﾟ･｡
 ¡Holi! Soy *${botname}* 
-Tu asistente virtual lista para ayudarte con un toque de magia ~ 🎀
 
 ╭┈─────── ୨୧ ───────┈╮
 ┊ ｡ﾟﾟ･｡･ﾟﾟ｡  𝐈𝐍𝐅𝐎 𝐃𝐄 𝐋𝐀 𝐁𝐎𝐓  ｡ﾟﾟ･｡･ﾟﾟ｡
@@ -49,7 +48,7 @@ Tu asistente virtual lista para ayudarte con un toque de magia ~ 🎀
 ┊        ↳  Para saber cuánto tiempo llevo brillando.
 ┊
 ┊  ୨♡୧  *#sc • #script*
-┊        ↳  ¿Curiosidad por mi magia interna? ¡Pregunta!
+> ↳  ¿Curiosidad por mi magia interna? ¡Pregunta!
 ┊
 ╰┈─────── ୨୧ ───────┈╯
 
