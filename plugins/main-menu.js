@@ -16,7 +16,7 @@ let handler = async (m, { conn, args }) => {
 
     let txt = `
 ｡･ﾟﾟ･ sweetly greets @${userId.split('@')[0]} ･ﾟﾟ･｡
-¡Holi! Soy *${botname}* (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧
+¡Holi! Soy *${botname}* 
 Tu asistente virtual lista para ayudarte con un toque de magia ~ 🎀
 
 ╭┈─────── ୨୧ ───────┈╮
@@ -33,9 +33,9 @@ Tu asistente virtual lista para ayudarte con un toque de magia ~ 🎀
 ╰┈─────── ୨୧ ───────┈╯
 
 ╭┈─── ୨♡୧ ───┈╮
-┊  ✨ *Crea tu Propio Ayudante Mágico* ✨
+┊  ✨ *Crea tu Propio Ayudante* ✨
 ┊  Usa  ` + "`#qr`" + `  o  ` + "`#code`" + `
-┊  ¡Y ten un sub-bot tan lindo como yo!
+┊  ¡Y ten un sub-bot!
 ╰┈─── ୨♡୧ ───┈╯
 
 ╭┈─────── ୨୧ ───────┈╮
@@ -53,7 +53,7 @@ Tu asistente virtual lista para ayudarte con un toque de magia ~ 🎀
 ┊
 ╰┈─────── ୨୧ ───────┈╯
 
-Espero que te guste mi menú, ¡hecho con mucho cariño! (｡˃ ᵕ ˂ )ﾉﾞ💖
+
 `.trim();
 
   await conn.sendMessage(m.chat, {
