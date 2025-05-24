@@ -42,10 +42,10 @@ let handler = async (m, { conn, args }) => {
   ﾟ。       💖        ｡ﾟ
        ﾟ･｡･ﾟ
  ୨♡୧  *#help • #menu*
->  ↳  Muestra mi lista de comandos.
+> ↳  Muestra mi lista de comandos.
 
  ୨♡୧  *#uptime • #runtime*
->  ↳  Para saber cuánto tiempo llevo activa.
+> ↳  Para saber cuánto tiempo llevo activa.
 
  ୨♡୧  *#sc • #script*
 > ↳  mi repositorio oficial 
