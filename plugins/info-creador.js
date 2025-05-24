@@ -53,7 +53,7 @@ let handler = async (m, { conn }) => {
     ],
     [
       conn.user.jid.split('@')[0],
-      `🤖 Asistente Virtual (${botName})`,
+      `(${botName})`,
       botPackname,
       'Bot Oficial',
       ownerEmail, // o botEmail si lo defines
