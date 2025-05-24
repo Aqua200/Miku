@@ -21,7 +21,7 @@ const botChannel = 'https://whatsapp.com/channel/tu-canal-si-tienes'; // Canal d
 
 
 let handler = async (m, { conn }) => {
-  m.react('👋');
+  m.react('🩵');
 
   // Determinar a quién mostrar: el mencionado, el remitente (si no es el bot), o el propio bot (si m.fromMe)
   let who = m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.fromMe ? conn.user.jid : m.sender;
