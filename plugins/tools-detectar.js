@@ -1,15 +1,16 @@
-// Alex-X >> https://github.com/OfcKing
-
 import fs from 'fs'
 import path from 'path'
+import { fileURLToPath, pathToFileURL } from 'url'
 
-var handler = async (m, { usedPrefix, command }) => {
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
+
+var handler = async (m, { conn, usedPrefix, command }) => {
     try {
         await m.react('🕒') 
         conn.sendPresenceUpdate('composing', m.chat)
 
-        const pluginsDir = './plugins'
-
+        const pluginsDir = path.join(__dirname, '../plugins')
         const files = fs.readdirSync(pluginsDir).filter(file => file.endsWith('.js'))
 
         let response = `✧ *Revisión de Syntax Errors:*\n\n`
@@ -17,12 +18,11 @@ var handler = async (m, { usedPrefix, command }) => {
 
         for (const file of files) {
             try {
-                await import(path.resolve(pluginsDir, file))
+                await import(pathToFileURL(path.join(pluginsDir, file)))
             } catch (error) {
                 hasErrors = true
                 const stackLines = error.stack.split('\n')
-
-                const errorLineMatch = stackLines[0].match(/:(\d+):\d+/) 
+                const errorLineMatch = stackLines[0].match(/:(\d+):\d+/)
                 const errorLine = errorLineMatch ? errorLineMatch[1] : 'Desconocido'
 
                 response += `⚠︎ *Error en:* ${file}\n\n> ● Mensaje: ${error.message}\n> ● Número de línea: ${errorLine}\n\n`
