@@ -28,18 +28,19 @@ let handler = async (m, { conn }) => {
     let scriptExecutionStart = speed();
     let scriptSpeed = (speed() - scriptExecutionStart).toFixed(4) + ' ms';
 
-    // --- Información del Sistema Mejorada ---
     const cpus = os.cpus();
     const cpuModel = cpus && cpus.length > 0 ? cpus[0].model : 'N/A';
     const numCores = cpus ? cpus.length : 'N/A';
-    
+
     const totalRAM = os.totalmem();
     const freeRAM = os.freemem();
     const usedRAM = totalRAM - freeRAM;
-    
-    const uptime = os.uptime();
-    const loadAvg = os.loadavg().map(avg => avg.toFixed(2)).join(', '); // Promedio de carga (1m, 5m, 15m)
-    
+
+    const systemUptimeSeconds = os.uptime();
+    const processUptimeSeconds = process.uptime();
+
+    const loadAvg = os.loadavg().map(avg => avg.toFixed(2)).join(', ');
+
     const nodeVersion = process.version;
     const hostname = os.hostname();
 
@@ -50,12 +51,14 @@ let handler = async (m, { conn }) => {
     systemInfoText += `\n🧠 *CPU:*\n`;
     systemInfoText += `  Modelo: ${cpuModel}\n`;
     systemInfoText += `  Núcleos: ${numCores}\n`;
-    systemInfoText += `  Carga Promedio: ${loadAvg} (1m, 5m, 15m)\n`; // Más útil en Linux/macOS
+    systemInfoText += `  Carga Promedio: ${loadAvg} (1m, 5m, 15m)\n`;
     systemInfoText += `\n💾 *RAM:*\n`;
     systemInfoText += `  Total: ${(totalRAM / 1024 / 1024 / 1024).toFixed(2)} GB\n`;
     systemInfoText += `  Usada: ${(usedRAM / 1024 / 1024 / 1024).toFixed(2)} GB (${((usedRAM / totalRAM) * 100).toFixed(1)}%)\n`;
     systemInfoText += `  Libre: ${(freeRAM / 1024 / 1024 / 1024).toFixed(2)} GB\n`;
-    systemInfoText += `\n⏱️ *Uptime del Sistema:*\n  ${formatUptime(uptime)}\n`;
+    systemInfoText += `\n⏱️ *Tiempos Activo:*\n`;
+    systemInfoText += `  Sistema: ${formatUptime(systemUptimeSeconds)}\n`;
+    systemInfoText += `  Bot: ${formatUptime(processUptimeSeconds)}\n`;
     systemInfoText += `\n🔧 *Entorno:*\n`;
     systemInfoText += `  Node.js: ${nodeVersion}\n`;
 
@@ -77,16 +80,18 @@ function formatUptime(seconds) {
     const m = Math.floor(seconds % 3600 / 60);
     const s = Math.floor(seconds % 60);
 
-    const dDisplay = d > 0 ? d + (d === 1 ? " día, " : " días, ") : "";
-    const hDisplay = h > 0 ? h + (h === 1 ? " hora, " : " horas, ") : "";
-    const mDisplay = m > 0 ? m + (m === 1 ? " minuto, " : " minutos, ") : "";
+    const dDisplay = d > 0 ? d + (d === 1 ? " día" : " días") : "";
+    const hDisplay = h > 0 ? h + (h === 1 ? " hora" : " horas") : "";
+    const mDisplay = m > 0 ? m + (m === 1 ? " minuto" : " minutos") : "";
     const sDisplay = s > 0 ? s + (s === 1 ? " segundo" : " segundos") : "";
-    
-    let result = dDisplay + hDisplay + mDisplay + sDisplay;
-    if (result.endsWith(", ")) { // Quitar la última coma y espacio si existe
-        result = result.substring(0, result.length - 2);
-    }
-    return result.length > 0 ? result : "Ahora mismo";
+
+    const parts = [dDisplay, hDisplay, mDisplay, sDisplay].filter(Boolean);
+
+    if (parts.length === 0) return "Ahora mismo";
+    if (parts.length === 1) return parts[0];
+
+    const lastPart = parts.pop();
+    return parts.join(', ') + (parts.length > 0 ? ' y ' : '') + lastPart;
 }
 
 handler.help = ['ping', 'speed', 'p', 'status', 'estado'];
