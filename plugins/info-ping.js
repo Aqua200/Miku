@@ -29,16 +29,20 @@ let handler = async (m, { conn }) => {
     let scriptSpeed = (speed() - scriptExecutionStart).toFixed(4) + ' ms';
 
     exec('neofetch --stdout', (error, stdout, stderr) => {
-        let systemInfo = 'No se pudo obtener la información del sistema.';
+        let systemInfoOutput;
+
         if (error) {
             console.error(`Error al ejecutar neofetch: ${error.message}`);
-            systemInfo = `Error al obtener info: ${error.message}`;
+            if (error.code === 127 || (error.message && error.message.toLowerCase().includes('not found'))) {
+                systemInfoOutput = '`neofetch` no está instalado en el servidor.';
+            } else {
+                systemInfoOutput = 'No se pudo obtener la información del sistema (error al ejecutar neofetch).';
+            }
         } else if (stderr && !stdout) {
-            console.warn(`Neofetch stderr: ${stderr}`);
-            systemInfo = `Neofetch stderr: ${stderr.substring(0, 100)}`;
-        }
-        else {
-            systemInfo = stdout.toString('utf-8').replace(/Memory:/, 'RAM:');
+            console.warn(`Neofetch stderr (sin stdout): ${stderr}`);
+            systemInfoOutput = 'No se pudo obtener la información del sistema (neofetch reportó un error).';
+        } else {
+            systemInfoOutput = stdout.toString('utf-8').replace(/Memory:/, 'RAM:');
             if (stderr) {
                 console.warn(`Neofetch stderr (warnings): ${stderr}`);
             }
@@ -47,7 +51,7 @@ let handler = async (m, { conn }) => {
         const responseText = `✰ *¡Pong!*\n` +
                            `> 応答 (Bot a WhatsApp): ${botPing}\n` +
                            `> Velocidad Script: ${scriptSpeed}\n\n` +
-                           `💻 *Información del Sistema:*\n${systemInfo.trim()}`;
+                           `💻 *Información del Sistema:*\n${systemInfoOutput.trim()}`;
 
         conn.reply(m.chat, responseText, m);
     });
