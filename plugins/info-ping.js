@@ -32,9 +32,13 @@ let handler = async (m, { conn }) => {
     const cpuModel = cpus && cpus.length > 0 ? cpus[0].model : 'N/A';
     const numCores = cpus ? cpus.length : 'N/A';
 
-    const totalRAM = os.totalmem();
-    const freeRAM = os.freemem();
-    const usedRAM = totalRAM - freeRAM;
+    // System RAM
+    const totalRAMBytes = os.totalmem();
+    const freeRAMBytes = os.freemem();
+    const usedRAMBytes = totalRAMBytes - freeRAMBytes;
+
+    // Process RAM (Bot's own memory usage)
+    const processMemoryUsage = process.memoryUsage();
 
     const systemUptimeSeconds = os.uptime();
     const processUptimeSeconds = process.uptime();
@@ -51,11 +55,16 @@ let handler = async (m, { conn }) => {
     systemInfoText += `\n🧠 *CPU:*\n`;
     systemInfoText += `  Modelo: ${cpuModel}\n`;
     systemInfoText += `  Núcleos: ${numCores}\n`;
-    systemInfoText += `  Carga Promedio: ${loadAvg} (1m, 5m, 15m)\n`;
-    systemInfoText += `\n💾 *RAM:*\n`;
-    systemInfoText += `  Total: ${(totalRAM / 1024 / 1024 / 1024).toFixed(2)} GB\n`;
-    systemInfoText += `  Usada: ${(usedRAM / 1024 / 1024 / 1024).toFixed(2)} GB (${((usedRAM / totalRAM) * 100).toFixed(1)}%)\n`;
-    systemInfoText += `  Libre: ${(freeRAM / 1024 / 1024 / 1024).toFixed(2)} GB\n`;
+    systemInfoText += `  Carga Promedio: ${loadAvg} (1m, 5m, 15m)\n`; // Note: os.loadavg() returns [0,0,0] on Windows
+    systemInfoText += `\n💾 *RAM del Sistema:*\n`;
+    systemInfoText += `  Total: ${(totalRAMBytes / 1024 / 1024 / 1024).toFixed(2)} GiB\n`;
+    systemInfoText += `  Usada: ${(usedRAMBytes / 1024 / 1024 / 1024).toFixed(2)} GiB (${((usedRAMBytes / totalRAMBytes) * 100).toFixed(1)}%)\n`;
+    systemInfoText += `  Libre: ${(freeRAMBytes / 1024 / 1024 / 1024).toFixed(2)} GiB\n`;
+    systemInfoText += `\n📊 *Uso de Memoria del Bot (Proceso Node.js):*\n`;
+    systemInfoText += `  RSS (Residente): ${(processMemoryUsage.rss / 1024 / 1024).toFixed(2)} MiB\n`;
+    systemInfoText += `  Heap Total: ${(processMemoryUsage.heapTotal / 1024 / 1024).toFixed(2)} MiB\n`;
+    systemInfoText += `  Heap Usado: ${(processMemoryUsage.heapUsed / 1024 / 1024).toFixed(2)} MiB\n`;
+    systemInfoText += `  Externo (C++): ${(processMemoryUsage.external / 1024 / 1024).toFixed(2)} MiB\n`;
     systemInfoText += `\n⏱️ *Tiempos Activo:*\n`;
     systemInfoText += `  Sistema: ${formatUptime(systemUptimeSeconds)}\n`;
     systemInfoText += `  Bot: ${formatUptime(processUptimeSeconds)}\n`;
