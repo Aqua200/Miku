@@ -1,5 +1,5 @@
 import speed from 'performance-now';
-import { exec } from 'child_process';
+import os from 'os';
 
 let handler = async (m, { conn }) => {
     let botPing = 'N/A';
@@ -28,34 +28,43 @@ let handler = async (m, { conn }) => {
     let scriptExecutionStart = speed();
     let scriptSpeed = (speed() - scriptExecutionStart).toFixed(4) + ' ms';
 
-    exec('neofetch --stdout', (error, stdout, stderr) => {
-        let systemInfoOutput;
-
-        if (error) {
-            console.error(`Error al ejecutar neofetch: ${error.message}`);
-            if (error.code === 127 || (error.message && error.message.toLowerCase().includes('not found'))) {
-                systemInfoOutput = '`neofetch` no está instalado en el servidor.';
-            } else {
-                systemInfoOutput = 'No se pudo obtener la información del sistema (error al ejecutar neofetch).';
-            }
-        } else if (stderr && !stdout) {
-            console.warn(`Neofetch stderr (sin stdout): ${stderr}`);
-            systemInfoOutput = 'No se pudo obtener la información del sistema (neofetch reportó un error).';
-        } else {
-            systemInfoOutput = stdout.toString('utf-8').replace(/Memory:/, 'RAM:');
-            if (stderr) {
-                console.warn(`Neofetch stderr (warnings): ${stderr}`);
-            }
-        }
-
-        const responseText = `✰ *¡Pong!*\n` +
-                           `> 応答 (Bot a WhatsApp): ${botPing}\n` +
-                           `> Velocidad Script: ${scriptSpeed}\n\n` +
-                           `💻 *Información del Sistema:*\n${systemInfoOutput.trim()}`;
-
-        conn.reply(m.chat, responseText, m);
+    const cpus = os.cpus().map(cpu => {
+        cpu.total = Object.keys(cpu.times).reduce((last, type) => last + cpu.times[type], 0);
+        return cpu;
     });
+
+    const cpu = cpus[0];
+    const totalRAM = os.totalmem();
+    const freeRAM = os.freemem();
+    const uptime = os.uptime();
+
+    let systemInfoText = `💻 *Información del Sistema (Node.js):*\n`;
+    systemInfoText += `> OS: ${os.type()} (${os.platform()})\n`;
+    systemInfoText += `> Arch: ${os.arch()}\n`;
+    systemInfoText += `> CPU: ${cpu ? cpu.model : 'N/A'}\n`;
+    systemInfoText += `> RAM Total: ${(totalRAM / 1024 / 1024 / 1024).toFixed(2)} GB\n`;
+    systemInfoText += `> RAM Libre: ${(freeRAM / 1024 / 1024 / 1024).toFixed(2)} GB\n`;
+    systemInfoText += `> Uptime: ${formatUptime(uptime)}\n`;
+
+
+    const responseText = `✰ *¡Pong!*\n` +
+                       `> 応答 (Bot a WhatsApp): ${botPing}\n` +
+                       `> Velocidad Script: ${scriptSpeed}\n\n` +
+                       `${systemInfoText.trim()}`;
+
+    conn.reply(m.chat, responseText, m);
 };
+
+function formatUptime(seconds) {
+    function pad(s) {
+        return (s < 10 ? '0' : '') + s;
+    }
+    var hours = Math.floor(seconds / (60 * 60));
+    var minutes = Math.floor(seconds % (60 * 60) / 60);
+    var secs = Math.floor(seconds % 60);
+
+    return `${pad(hours)}h ${pad(minutes)}m ${pad(secs)}s`;
+}
 
 handler.help = ['ping', 'speed', 'p'];
 handler.tags = ['info'];
