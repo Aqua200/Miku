@@ -13,7 +13,8 @@ let handler = async (m, { conn, args }) => {
 
     let txt = `
 ｡･ﾟﾟ･ sweetly greets @${userId.split('@')[0]} ･ﾟﾟ･｡
-¡Holi! Soy *${botname}* 
+¡Holi! Soy
+*${botname}* 
 
 ╭┈─────── ୨୧ ───────┈╮
 ┊  ❀  *Usuario:*  @${userId.split('@')[0]}
