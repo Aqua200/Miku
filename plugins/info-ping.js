@@ -55,7 +55,7 @@ let handler = async (m, { conn }) => {
     systemInfoText += `\n🧠 *CPU:*\n`;
     systemInfoText += `  Modelo: ${cpuModel}\n`;
     systemInfoText += `  Núcleos: ${numCores}\n`;
-    systemInfoText += `  Carga Promedio: ${loadAvg} (1m, 5m, 15m)\n`; // Note: os.loadavg() returns [0,0,0] on Windows
+    systemInfoText += `  Carga Promedio: ${loadAvg} (1m, 5m, 15m)\n`;
     systemInfoText += `\n💾 *RAM del Sistema:*\n`;
     systemInfoText += `  Total: ${(totalRAMBytes / 1024 / 1024 / 1024).toFixed(2)} GiB\n`;
     systemInfoText += `  Usada: ${(usedRAMBytes / 1024 / 1024 / 1024).toFixed(2)} GiB (${((usedRAMBytes / totalRAMBytes) * 100).toFixed(1)}%)\n`;
