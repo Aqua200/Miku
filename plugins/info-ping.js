@@ -1,5 +1,5 @@
 import speed from 'performance-now';
-import os from 'os';
+// El módulo 'os' ya no es necesario si eliminamos la información general del servidor.
 
 let handler = async (m, { conn }) => {
     let botPing = 'N/A';
@@ -28,54 +28,24 @@ let handler = async (m, { conn }) => {
     let scriptExecutionStart = speed();
     let scriptSpeed = (speed() - scriptExecutionStart).toFixed(4) + ' ms';
 
-    const cpus = os.cpus();
-    const cpuModel = cpus && cpus.length > 0 ? cpus[0].model : 'N/A';
-    const numCores = cpus ? cpus.length : 'N/A';
-
-    // System RAM
-    const totalRAMBytes = os.totalmem();
-    const freeRAMBytes = os.freemem();
-    const usedRAMBytes = totalRAMBytes - freeRAMBytes;
-
-    // Process RAM (Bot's own memory usage)
+    // --- Información del Proceso del Bot ---
     const processMemoryUsage = process.memoryUsage();
-
-    const systemUptimeSeconds = os.uptime();
     const processUptimeSeconds = process.uptime();
-
-    const loadAvg = os.loadavg().map(avg => avg.toFixed(2)).join(', ');
-
     const nodeVersion = process.version;
-    const hostname = os.hostname();
 
-    let systemInfoText = `💻 *Estadísticas del Servidor*\n\n`;
-    systemInfoText += `OS: ${os.type()} ${os.release()} (${os.platform()})\n`;
-    systemInfoText += `Arquitectura: ${os.arch()}\n`;
-    systemInfoText += `Hostname: ${hostname}\n`;
-    systemInfoText += `\n🧠 *CPU:*\n`;
-    systemInfoText += `  Modelo: ${cpuModel}\n`;
-    systemInfoText += `  Núcleos: ${numCores}\n`;
-    systemInfoText += `  Carga Promedio: ${loadAvg} (1m, 5m, 15m)\n`;
-    systemInfoText += `\n💾 *RAM del Sistema:*\n`;
-    systemInfoText += `  Total: ${(totalRAMBytes / 1024 / 1024 / 1024).toFixed(2)} GiB\n`;
-    systemInfoText += `  Usada: ${(usedRAMBytes / 1024 / 1024 / 1024).toFixed(2)} GiB (${((usedRAMBytes / totalRAMBytes) * 100).toFixed(1)}%)\n`;
-    systemInfoText += `  Libre: ${(freeRAMBytes / 1024 / 1024 / 1024).toFixed(2)} GiB\n`;
-    systemInfoText += `\n📊 *Uso de Memoria del Bot (Proceso Node.js):*\n`;
-    systemInfoText += `  RSS (Residente): ${(processMemoryUsage.rss / 1024 / 1024).toFixed(2)} MiB\n`;
-    systemInfoText += `  Heap Total: ${(processMemoryUsage.heapTotal / 1024 / 1024).toFixed(2)} MiB\n`;
-    systemInfoText += `  Heap Usado: ${(processMemoryUsage.heapUsed / 1024 / 1024).toFixed(2)} MiB\n`;
-    systemInfoText += `  Externo (C++): ${(processMemoryUsage.external / 1024 / 1024).toFixed(2)} MiB\n`;
-    systemInfoText += `\n⏱️ *Tiempos Activo:*\n`;
-    systemInfoText += `  Sistema: ${formatUptime(systemUptimeSeconds)}\n`;
-    systemInfoText += `  Bot: ${formatUptime(processUptimeSeconds)}\n`;
-    systemInfoText += `\n🔧 *Entorno:*\n`;
-    systemInfoText += `  Node.js: ${nodeVersion}\n`;
+    let botInfoText = `📊 *Rendimiento del Bot:*\n\n`;
+    botInfoText += `  Node.js: ${nodeVersion}\n`;
+    botInfoText += `  Tiempo Activo (Bot): ${formatUptime(processUptimeSeconds)}\n`;
+    botInfoText += `\n🧠 *Uso de Memoria (Proceso del Bot):*\n`;
+    botInfoText += `  RSS: ${(processMemoryUsage.rss / 1024 / 1024).toFixed(2)} MiB\n`; // Memoria residente
+    botInfoText += `  Heap Total: ${(processMemoryUsage.heapTotal / 1024 / 1024).toFixed(2)} MiB\n`; // Memoria asignada para el heap
+    botInfoText += `  Heap Usado: ${(processMemoryUsage.heapUsed / 1024 / 1024).toFixed(2)} MiB\n`; // Memoria del heap actualmente en uso
 
 
     const responseText = `✰ *¡Pong!* ✰\n` +
                        `> 🏓 Latencia (Bot ↔️ WhatsApp): ${botPing}\n` +
                        `> ⚡ Velocidad Script: ${scriptSpeed}\n\n` +
-                       `${systemInfoText.trim()}`;
+                       `${botInfoText.trim()}`;
 
     conn.reply(m.chat, responseText, m);
 };
