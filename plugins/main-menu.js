@@ -13,8 +13,9 @@ let handler = async (m, { conn, args }) => {
 
     let txt = `
 ╭︰💫・ﾟ｡  
-╰⊱ Konnichiwa~ @${userId.split('@')[0]} ✨  
-Soy *${botname}*, tu compañerita🌸
+╰⊱ Konnichiwa~ 
+@${userId.split('@')[0]} ✨ Soy
+*${botname}*, tu compañerita🌸
 ¿Jugamos un rato? ₊˚ෆ
 
 ╭┈─────── ୨୧ ───────┈╮
