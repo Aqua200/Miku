@@ -12,7 +12,8 @@ let handler = async (m, { conn, args }) => {
     let redes = global.redes || 'https://linktr.ee/tu_bot'; // Enlace a tus redes o un linktree (cambiado para ser un placeholder)
 
     let txt = `
-｡･ﾟﾟ･ sweetly greets @${userId.split('@')[0]} ･ﾟﾟ･｡
+｡･ﾟﾟ･ sweetly greets 
+@${userId.split('@')[0]} ･ﾟﾟ･｡
 ¡Holi! Soy
 *${botname}* 
 
