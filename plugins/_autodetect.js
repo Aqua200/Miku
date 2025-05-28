@@ -4,7 +4,7 @@ export async function before(m, { conn, participants, groupMetadata }) {
   if (!m.messageStubType || !m.isGroup) return;
 
   const botUser = conn.user;
-  const botJid = botUser.id.split('@')[0].split(':')[0];
+  const botJid = botUser.id.split('@')[0].split(':')[0]; // Número del bot sin @s.whatsapp.net
   const botName = botUser.name || conn.user.verifiedName || conn.user.notify || 'Bot';
 
   const fkontak = {
@@ -27,20 +27,26 @@ export async function before(m, { conn, participants, groupMetadata }) {
   if (!chat) global.db.data.chats[m.chat] = {};
   chat = global.db.data.chats[m.chat];
 
-  const getUserName = (jid) => {
+  
+  const getUserMention = (jid) => {
     if (!jid) return 'Desconocido';
-    return conn.getName(jid) || `@${jid.split('@')[0]}`;
+    const user = global.db.data.users[jid];
+    
+    return user?.name || conn.getName(jid) || `@${jid.split('@')[0]}`;
   };
 
-  let usuario = getUserName(m.sender);
-  let pp = await conn.profilePictureUrl(m.chat, 'image').catch(_ => null) || 'https://files.catbox.moe/xr2m6u.jpg';
+  
+  const actorUserJid = m.sender;
+  const actorUserName = getUserMention(actorUserJid); 
 
-  let mentions = [m.sender];
-  let targetUserJid, targetUserName;
+  
+  let targetUserJid = null;
+  let targetUserName = 'Alguien';
 
   if (m.messageStubParameters && m.messageStubParameters.length > 0) {
     const firstParam = m.messageStubParameters[0];
     if (typeof firstParam === 'string' && firstParam.includes('@')) {
+      
       if (
         m.messageStubType === BaileysWAMessageStubType.GROUP_PARTICIPANT_ADD ||
         m.messageStubType === BaileysWAMessageStubType.GROUP_PARTICIPANT_REMOVE ||
@@ -48,63 +54,85 @@ export async function before(m, { conn, participants, groupMetadata }) {
         m.messageStubType === BaileysWAMessageStubType.GROUP_PARTICIPANT_DEMOTE
       ) {
         targetUserJid = firstParam;
-        targetUserName = getUserName(targetUserJid);
+        targetUserName = getUserMention(targetUserJid); // Nombre o @numero del afectado
       }
     }
   }
+  
+  let pp = await conn.profilePictureUrl(m.chat, 'image').catch(_ => null) || 'https://files.catbox.moe/xr2m6u.jpg';
 
-  let eventos = {
+  
+  const eventos = {
     [BaileysWAMessageStubType.GROUP_CHANGE_SUBJECT]: {
-      mensaje: `《✦》${usuario} Ha cambiado el nombre del grupo.\n\n> ✧ Ahora el grupo se llama:\n> *${m.messageStubParameters[0]}*`,
-      tipo: 'texto'
+      mensaje: `《✦》Cambio de Nombre del Grupo《✦》\n\n> ✧ Acción hecha por:\n> » ${actorUserName}\n\n> ✧ Nuevo nombre:\n> » *${m.messageStubParameters[0]}*\n\n> ✧ Bot detector: @${botJid}`,
+      tipo: 'texto',
+      mencionesAdicionales: []
     },
     [BaileysWAMessageStubType.GROUP_CHANGE_ICON]: {
-      mensaje: `《✦》Se ha cambiado la imagen del grupo.\n\n> ✧ Acción hecha por:\n> » ${usuario}`,
+      mensaje: `《✦》Cambio de Imagen del Grupo《✦》\n\n> ✧ Acción hecha por:\n> » ${actorUserName}\n\n> ✧ Bot detector: @${botJid}`,
       tipo: 'imagen',
-      imagen: pp
+      imagen: pp,
+      mencionesAdicionales: []
     },
     [BaileysWAMessageStubType.GROUP_CHANGE_DESCRIPTION]: {
-      mensaje: `《✦》Se ha modificado la descripción del grupo.\n\n> ✧ Usuario:\n> » ${usuario}\n\n> ✧ Nueva descripción:\n> ${m.messageStubParameters?.[0] || 'Descripción no disponible'}`,
-      tipo: 'texto'
+      mensaje: `《✦》Cambio de Descripción del Grupo《✦》\n\n> ✧ Acción hecha por:\n> » ${actorUserName}\n\n> ✧ Nueva descripción:\n> » ${m.messageStubParameters?.[0] || 'Descripción no disponible'}\n\n> ✧ Bot detector: @${botJid}`,
+      tipo: 'texto',
+      mencionesAdicionales: []
     },
     [BaileysWAMessageStubType.GROUP_CHANGE_RESTRICT]: {
-      mensaje: `《✦》${usuario} Ha permitido que ${m.messageStubParameters[0] == 'on' || m.messageStubParameters[0] === true ? 'solo admins' : 'todos'} puedan configurar el grupo.`,
-      tipo: 'texto'
+      mensaje: `《✦》Ajustes de Grupo Modificados《✦》\n\n> ✧ Acción hecha por:\n> » ${actorUserName}\n\n> ✧ Ahora ${m.messageStubParameters[0] == 'on' || m.messageStubParameters[0] === true ? '*solo administradores*' : '*todos los participantes*'} pueden editar la información del grupo.\n\n> ✧ Bot detector: @${botJid}`,
+      tipo: 'texto',
+      mencionesAdicionales: []
     },
     [BaileysWAMessageStubType.GROUP_CHANGE_ANNOUNCE]: {
-      mensaje: `《✦》El grupo ha sido ${m.messageStubParameters[0] == 'on' || m.messageStubParameters[0] === true ? '*cerrado*' : '*abierto*'} Por ${usuario}\n\n> ✧ Ahora ${m.messageStubParameters[0] == 'on' || m.messageStubParameters[0] === true ? '*solo admins*' : '*todos*'} pueden enviar mensaje.`,
-      tipo: 'texto'
+      mensaje: `《✦》Ajustes de Envío de Mensajes《✦》\n\n> ✧ Acción hecha por:\n> » ${actorUserName}\n\n> ✧ El grupo ha sido ${m.messageStubParameters[0] == 'on' || m.messageStubParameters[0] === true ? '*CERRADO*' : '*ABIERTO*'}.\n> ✧ Ahora ${m.messageStubParameters[0] == 'on' || m.messageStubParameters[0] === true ? '*solo administradores*' : '*todos los participantes*'} pueden enviar mensajes.\n\n> ✧ Bot detector: @${botJid}`,
+      tipo: 'texto',
+      mencionesAdicionales: []
     },
     [BaileysWAMessageStubType.GROUP_PARTICIPANT_PROMOTE]: {
-      mensaje: `《✦》${targetUserName || (m.messageStubParameters[0] ? `@${m.messageStubParameters[0].split('@')[0]}` : 'Alguien')} Ahora es admin del grupo.\n\n> ✧ Acción hecha por:\n> » ${usuario}`,
+      mensaje: `《✦》Nuevo Administrador《✦》\n\n> ✧ Usuario ascendido:\n> » ${targetUserName}\n\n> ✧ Acción hecha por:\n> » ${actorUserName}\n\n> ✧ Bot detector: @${botJid}`,
       tipo: 'texto',
       mencionesAdicionales: targetUserJid ? [targetUserJid] : []
     },
     [BaileysWAMessageStubType.GROUP_PARTICIPANT_DEMOTE]: {
-      mensaje: `《✦》${targetUserName || (m.messageStubParameters[0] ? `@${m.messageStubParameters[0].split('@')[0]}` : 'Alguien')} Deja de ser admin del grupo.\n\n> ✧ Acción hecha por:\n> » ${usuario}`,
+      mensaje: `《✦》Admin Degradado《✦》\n\n> ✧ Usuario degradado:\n> » ${targetUserName}\n\n> ✧ Acción hecha por:\n> » ${actorUserName}\n\n> ✧ Bot detector: @${botJid}`,
       tipo: 'texto',
       mencionesAdicionales: targetUserJid ? [targetUserJid] : []
+    },
+    
+    [BaileysWAMessageStubType.GROUP_CHANGE_INVITE_LINK]: { // Esta es la constante más probable para el cambio de enlace
+      mensaje: `《✦》Enlace del Grupo Restablecido《✦》\n\n> ✧ Acción hecha por:\n> » ${actorUserName}\n\n> ✧ Bot detector: @${botJid}`,
+      tipo: 'texto',
+      mencionesAdicionales: []
     }
   };
-
-  if (m.messageStubType === 23) {
-    eventos[23] = {
-      mensaje: `《✦》El enlace del grupo ha sido restablecido.\n\n> ✧ Acción hecha por:\n> » ${usuario}`,
-      tipo: 'texto'
+  
+  
+  if (m.messageStubType === 23 && !eventos[BaileysWAMessageStubType.GROUP_CHANGE_INVITE_LINK]) {
+    
+    eventos[23] = { 
+      mensaje: `《✦》Enlace del Grupo Modificado/Restablecido《✦》\n\n> ✧ Acción hecha por:\n> » ${actorUserName}\n\n> ✧ Bot detector: @${botJid}`,
+      tipo: 'texto',
+      mencionesAdicionales: []
     };
   }
+
 
   const isDetectEnabled = chat && (typeof chat.detect === 'boolean' ? chat.detect : (chat.detect !== 'false' && chat.detect !== false));
 
   if (isDetectEnabled && eventos[m.messageStubType]) {
-    let evento = eventos[m.messageStubType];
-    let finalMentions = [m.sender];
+    const evento = eventos[m.messageStubType];
+    
+    
+    let finalMentions = [actorUserJid, botUser.id]; 
 
+    
     if (evento.mencionesAdicionales && evento.mencionesAdicionales.length > 0) {
-      finalMentions.push(...evento.mencionesAdicionales);
+      finalMentions.push(...evento.mencionesAdicionales.filter(jid => jid)); 
     }
-
-    finalMentions = [...new Set(finalMentions.filter(jid => typeof jid === 'string'))];
+    
+    
+    finalMentions = [...new Set(finalMentions.filter(jid => typeof jid === 'string' && jid.includes('@')))];
 
     if (evento.tipo === 'texto') {
       await conn.sendMessage(m.chat, {
