@@ -60,7 +60,7 @@ let handler = async (m, { conn, args }) => {
                 externalAdReply: {
                     title: packname,
                     body: dev,
-                    thumbnailUrl: 'https://qu.ax/nGaLj.jpg',
+                    thumbnailUrl: 'https://files.catbox.moe/s1bf95.jpg',
                     sourceUrl: redes,
                     mediaType: 1,
                     renderLargerThumbnail: true
