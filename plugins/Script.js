@@ -4,7 +4,7 @@ import fetch from 'node-fetch';
 // --- CONFIGURACIÓN / VARIABLES GLOBALES (ASEGÚRATE DE QUE ESTÉN DEFINIDAS) ---
 const dev = '𝑵𝒆𝒚𝒌𝒐𝒐𝒓 𝑫𝒆𝒗 💜';
 const packname = '🩵𝑴𝒊𝒌𝒖...𝑩𝒐𝒕🩵';
-const redes = 'https://tus.redes.sociales';
+const redes = 'Nunca dejes de soñer 🌸';
 const msm = '[!]';
 const error = '❌';
 const fkontak = { key: {participant: "0@s.whatsapp.net", remoteJid: "0@s.whatsapp.net"}, message: {"groupInviteMessage": {"groupJid": "51995386439-1616986525@g.us", "inviteCode": "m", "groupName": "P", "caption": packname, "jpegThumbnail": null}}};
