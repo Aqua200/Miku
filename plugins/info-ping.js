@@ -1,5 +1,4 @@
 import speed from 'performance-now';
-// El módulo 'os' ya no es necesario si eliminamos la información general del servidor.
 
 let handler = async (m, { conn }) => {
     let botPing = 'N/A';
@@ -28,19 +27,12 @@ let handler = async (m, { conn }) => {
     let scriptExecutionStart = speed();
     let scriptSpeed = (speed() - scriptExecutionStart).toFixed(4) + ' ms';
 
-    // --- Información del Proceso del Bot ---
-    const processMemoryUsage = process.memoryUsage();
     const processUptimeSeconds = process.uptime();
     const nodeVersion = process.version;
 
     let botInfoText = `📊 *Rendimiento del Bot:*\n\n`;
     botInfoText += `  Node.js: ${nodeVersion}\n`;
     botInfoText += `  Tiempo Activo (Bot): ${formatUptime(processUptimeSeconds)}\n`;
-    botInfoText += `\n🧠 *Uso de Memoria (Proceso del Bot):*\n`;
-    botInfoText += `  RSS: ${(processMemoryUsage.rss / 1024 / 1024).toFixed(2)} MiB\n`; // Memoria residente
-    botInfoText += `  Heap Total: ${(processMemoryUsage.heapTotal / 1024 / 1024).toFixed(2)} MiB\n`; // Memoria asignada para el heap
-    botInfoText += `  Heap Usado: ${(processMemoryUsage.heapUsed / 1024 / 1024).toFixed(2)} MiB\n`; // Memoria del heap actualmente en uso
-
 
     const responseText = `✰ *¡Pong!* ✰\n` +
                        `> 🏓 Latencia (Bot ↔️ WhatsApp): ${botPing}\n` +
