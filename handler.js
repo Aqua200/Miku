@@ -156,6 +156,10 @@ if (!('sAutoresponder' in chat))
 chat.sAutoresponder = ''
 if (!('welcome' in chat))
 chat.welcome = true
+if (!('sWelcome' in chat)
+chat.sWelcome = null 
+if (!('sBye' in chat)
+chat.sBye = null
 if (!('autolevelup' in chat))
 chat.autolevelup = false
 if (!('autoAceptar' in chat))
@@ -192,6 +196,8 @@ global.db.data.chats[m.chat] = {
 isBanned: false,
 sAutoresponder: '',
 welcome: true,
+sWelcome: null, 
+sBye: null,
 autolevelup: false,
 autoresponder: false,
 delete: false,
