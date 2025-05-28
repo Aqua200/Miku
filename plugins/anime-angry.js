@@ -17,7 +17,17 @@ let handler = async (m, { conn, usedPrefix }) => {
     
     if (m.isGroup) {
         let pp = 'https://files.catbox.moe/dnk7oc.mp4'
-        
+        let pp2 = ''
+        let pp3 = ''
+        let pp4 = ''
+        let pp5 = ''
+        let pp6 = ''
+        let pp7 = ''
+        let pp8 = ''
+        let pp9 = ''
+        let pp10 = ''
+        let pp11 = ''
+        let pp12 = ''
         
         const videos = [pp, pp2, pp3, pp4, pp5, pp6, pp7, pp8, pp9, pp10, pp11, pp12]
         const video = videos[Math.floor(Math.random() * videos.length)]
