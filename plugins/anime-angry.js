@@ -16,7 +16,7 @@ let handler = async (m, { conn, usedPrefix }) => {
         : `\`${name2}\` está enojado/a 凸ಠ益ಠ)凸`
     
     if (m.isGroup) {
-        let pp = ''
+        let pp = 'https://files.catbox.moe/dnk7oc.mp4'
         
         
         const videos = [pp, pp2, pp3, pp4, pp5, pp6, pp7, pp8, pp9, pp10, pp11, pp12]
