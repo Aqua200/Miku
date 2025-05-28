@@ -5,10 +5,17 @@ const WAMessageStubType = baileys.default;
 export async function before(m, { conn, participants, groupMetadata }) {
   if (!m.messageStubType || !m.isGroup) return;
 
-  // Función reutilizable para obtener el nombre del usuario
   function getUserName(id) {
     const p = participants.find(p => p.id === id);
-    return p?.name || p?.notify || `@${id.split('@')[0]}`;
+    if (p?.name) return p.name;
+    if (p?.notify) return p.notify;
+
+    const contact = conn.contacts[id];
+    if (contact) {
+      return contact.notify || contact.vname || contact.name || `@${id.split('@')[0]}`;
+    }
+
+    return `@${id.split('@')[0]}`;
   }
 
   const fkontak = {
