@@ -37,8 +37,8 @@ function formatTime(seconds) {
   return `${h} hora${h !== 1 ? 's' : ''} ${m} minuto${m !== 1 ? 's' : ''} ${s} segundo${s !== 1 ? 's' : ''}`;
 }
 
-handler.help = ['ping'];
-handler.command = /^ping$/i;
-handler.tags = ['info'];
+handler.help = ['ping']
+handler.tags = ['info']
+handler.command = ['ping', 'p']
 
-export default handler;
+export default handler
