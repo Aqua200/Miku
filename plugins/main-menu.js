@@ -34,7 +34,7 @@ let handler = async (m, { conn, args }) => {
 ┊  ¡Convierte en un sub-bot!
 ╰┈───── ୨♡୧ ─────┈╯
 
-     ✧˚ ༘ ⋆｡˚ 『 Info-Bot 』 ˚｡⋆ ༘˚✧
+✧˚ ༘ ⋆｡˚ 『 Info-Bot 』 ˚｡⋆ ༘˚✧
 
  ୨♡୧  *#uptime • #runtime*
 > ↳  Para saber cuánto tiempo llevo activa.
