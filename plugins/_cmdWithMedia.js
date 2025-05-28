@@ -1,29 +1,66 @@
-const {
-    proto,
-    generateWAMessage,
-    areJidsSameUser
-} = (await import('@whiskeysockets/baileys')).default
+import baileys from '@whiskeysockets/baileys'
+import { proto, generateWAMessage, areJidsSameUser } from '@whiskeysockets/baileys'
 
-export async function all(m, chatUpdate) {
-    if (m.isBaileys) return
-    if (!m.message) return
-    if (!m.msg.fileSha256) return
-    if (!(Buffer.from(m.msg.fileSha256).toString('base64') in global.db.data.sticker)) return
+interface MessageData {
+  isBaileys: boolean
+  message?: any
+  msg?: {
+    fileSha256?: Buffer
+  }
+  chat: string
+  sender: string
+  key: { id: string }
+  quoted?: { fakeObj?: any }
+  isGroup: boolean
+  pushName: string
+}
 
-    let hash = global.db.data.sticker[Buffer.from(m.msg.fileSha256).toString('base64')]
-    let { text, mentionedJid } = hash
-    let messages = await generateWAMessage(m.chat, { text: text, mentions: mentionedJid }, {
+interface ChatUpdate {
+  [key: string]: any
+}
+
+interface StickerData {
+  text: string
+  mentionedJid: string[]
+}
+
+export async function all(this: any, m: MessageData, chatUpdate: ChatUpdate): Promise<void> {
+  if (m.isBaileys || !m.message || !m.msg?.fileSha256) return
+
+  const fileHash = m.msg.fileSha256.toString('base64')
+  const stickerDatabase = global.db?.data?.sticker || {}
+
+  if (!(fileHash in stickerDatabase)) return
+
+  const { text, mentionedJid }: StickerData = stickerDatabase[fileHash]
+
+  try {
+    const generated = await generateWAMessage(
+      m.chat,
+      { text, mentions: mentionedJid },
+      {
         userJid: this.user.id,
-        quoted: m.quoted && m.quoted.fakeObj
-    })
-    messages.key.fromMe = areJidsSameUser(m.sender, this.user.id)
-    messages.key.id = m.key.id
-    messages.pushName = m.pushName
-    if (m.isGroup) messages.participant = m.sender
-    let msg = {
-        ...chatUpdate,
-        messages: [proto.WebMessageInfo.fromObject(messages)],
-        type: 'append'
+        quoted: m.quoted?.fakeObj
+      }
+    )
+
+    generated.key.fromMe = areJidsSameUser(m.sender, this.user.id)
+    generated.key.id = m.key.id
+    generated.pushName = m.pushName
+
+    if (m.isGroup) {
+      generated.participant = m.sender
     }
-    this.ev.emit('messages.upsert', msg)
+
+    const messageObject = {
+      ...chatUpdate,
+      messages: [proto.WebMessageInfo.fromObject(generated)],
+      type: 'append'
+    }
+
+    this.ev.emit('messages.upsert', messageObject)
+
+  } catch (err) {
+    console.error('[Error generando mensaje automático]:', err)
+  }
 }
