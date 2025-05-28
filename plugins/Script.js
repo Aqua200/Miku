@@ -9,8 +9,8 @@ const msm = '[!]';
 const error = '❌';
 const fkontak = { key: {participant: "0@s.whatsapp.net", remoteJid: "0@s.whatsapp.net"}, message: {"groupInviteMessage": {"groupJid": "51995386439-1616986525@g.us", "inviteCode": "m", "groupName": "P", "caption": packname, "jpegThumbnail": null}}};
 const channelRD = {
-    name: 'NombreDelCanalOficial',
-    id: 'id_del_canal_oficial@newsletter'
+    name: 'Canal Oficial ',
+    id: '120363392571425662@newsletter'
 };
 // --- FIN DE CONFIGURACIÓN ---
 
