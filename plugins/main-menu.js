@@ -29,7 +29,7 @@ let handler = async (m, { conn, args }) => {
 
 ╭┈───── ୨♡୧ ─────┈╮
 ┊ *¿Como ser un sub-bot?* 
-┊  Usa  ` + "`#qr`" + `  o  ` + "`#code` " + `
+┊  Usa  ` + "`#qr`" + `  o  ` + "`#code`  " + `
 ┊  ¡Convierte en un sub-bot!
 ╰┈───── ୨♡୧ ─────┈╯
 
