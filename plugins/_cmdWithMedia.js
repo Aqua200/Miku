@@ -1,66 +1,38 @@
 import baileys from '@whiskeysockets/baileys'
-import { proto, generateWAMessage, areJidsSameUser } from '@whiskeysockets/baileys'
+const { proto, generateWAMessage, areJidsSameUser } = baileys.default
 
-interface MessageData {
-  isBaileys: boolean
-  message?: any
-  msg?: {
-    fileSha256?: Buffer
-  }
-  chat: string
-  sender: string
-  key: { id: string }
-  quoted?: { fakeObj?: any }
-  isGroup: boolean
-  pushName: string
-}
-
-interface ChatUpdate {
-  [key: string]: any
-}
-
-interface StickerData {
-  text: string
-  mentionedJid: string[]
-}
-
-export async function all(this: any, m: MessageData, chatUpdate: ChatUpdate): Promise<void> {
+export async function all(m, chatUpdate) {
   if (m.isBaileys || !m.message || !m.msg?.fileSha256) return
 
-  const fileHash = m.msg.fileSha256.toString('base64')
-  const stickerDatabase = global.db?.data?.sticker || {}
+  const hash = Buffer.from(m.msg.fileSha256).toString('base64')
+  const stickerData = global.db?.data?.sticker?.[hash]
+  if (!stickerData) return
 
-  if (!(fileHash in stickerDatabase)) return
-
-  const { text, mentionedJid }: StickerData = stickerDatabase[fileHash]
+  const { text, mentionedJid } = stickerData
 
   try {
-    const generated = await generateWAMessage(
+    const msg = await generateWAMessage(
       m.chat,
       { text, mentions: mentionedJid },
       {
         userJid: this.user.id,
-        quoted: m.quoted?.fakeObj
+        quoted: m.quoted?.fakeObj,
       }
     )
 
-    generated.key.fromMe = areJidsSameUser(m.sender, this.user.id)
-    generated.key.id = m.key.id
-    generated.pushName = m.pushName
+    msg.key.fromMe = areJidsSameUser(m.sender, this.user.id)
+    msg.key.id = m.key.id
+    msg.pushName = m.pushName
+    if (m.isGroup) msg.participant = m.sender
 
-    if (m.isGroup) {
-      generated.participant = m.sender
-    }
-
-    const messageObject = {
+    const payload = {
       ...chatUpdate,
-      messages: [proto.WebMessageInfo.fromObject(generated)],
-      type: 'append'
+      messages: [proto.WebMessageInfo.fromObject(msg)],
+      type: 'append',
     }
 
-    this.ev.emit('messages.upsert', messageObject)
-
-  } catch (err) {
-    console.error('[Error generando mensaje automático]:', err)
+    this.ev.emit('messages.upsert', payload)
+  } catch (e) {
+    console.error('❌ Error al generar el mensaje automático:', e)
   }
 }
