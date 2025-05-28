@@ -5,6 +5,12 @@ const WAMessageStubType = baileys.default;
 export async function before(m, { conn, participants, groupMetadata }) {
   if (!m.messageStubType || !m.isGroup) return;
 
+  // Función reutilizable para obtener el nombre del usuario
+  function getUserName(id) {
+    const p = participants.find(p => p.id === id);
+    return p?.name || p?.notify || `@${id.split('@')[0]}`;
+  }
+
   const fkontak = {
     key: {
       participants: '0@s.whatsapp.net',
@@ -27,7 +33,7 @@ END:VCARD`
   };
 
   let chat = global.db.data.chats[m.chat];
-  let usuario = participants.find(p => p.id === m.sender)?.name || `@${m.sender.split`@`[0]}`;
+  let usuario = getUserName(m.sender);
   let pp = await conn.profilePictureUrl(m.chat, 'image').catch(_ => null) || 'https://files.catbox.moe/xr2m6u.jpg';
 
   let eventos = {
@@ -57,11 +63,11 @@ END:VCARD`
       tipo: 'texto'
     },
     29: {
-      mensaje: `《✦》${participants.find(p => p.id === m.messageStubParameters[0])?.name || `@${m.messageStubParameters[0].split`@`[0]}`} Ahora es admin del grupo.\n\n> ✧ Acción hecha por:\n> » ${usuario}`,
+      mensaje: `《✦》${getUserName(m.messageStubParameters[0])} Ahora es admin del grupo.\n\n> ✧ Acción hecha por:\n> » ${usuario}`,
       tipo: 'texto'
     },
     30: {
-      mensaje: `《✦》${participants.find(p => p.id === m.messageStubParameters[0])?.name || `@${m.messageStubParameters[0].split`@`[0]}`} Deja de ser admin del grupo.\n\n> ✧ Acción hecha por:\n> » ${usuario}`,
+      mensaje: `《✦》${getUserName(m.messageStubParameters[0])} Deja de ser admin del grupo.\n\n> ✧ Acción hecha por:\n> » ${usuario}`,
       tipo: 'texto'
     }
   };
