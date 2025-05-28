@@ -32,36 +32,36 @@ END:VCARD`
 
   let eventos = {
     21: {
-      mensaje: `✦ Cambio de Nombre ✦\n➥ Usuario: ${usuario}\n➥ Nuevo Nombre: ${m.messageStubParameters[0]}`,
+      mensaje: `《✦》${usuario} Ha cambiado el nombre del grupo.\n\n> ✧ Ahora el grupo se llama:\n> *${m.messageStubParameters[0]}*`,
       tipo: 'texto'
     },
     22: {
-      mensaje: `✦ Imagen del Grupo Cambiada ✦\n➥ Usuario: ${usuario}\n➥ La foto del grupo ha sido actualizada.`,
+      mensaje: `《✦》Se ha cambiado la imagen del grupo.\n\n> ✧ Acción hecha por:\n> » ${usuario}`,
       tipo: 'imagen',
       imagen: pp
     },
     23: {
-      mensaje: `✦ Enlace del Grupo Restablecido ✦\n➥ Usuario: ${usuario}\n➥ Se ha generado un nuevo enlace.`,
+      mensaje: `《✦》El enlace del grupo ha sido restablecido.\n\n> ✧ Acción hecha por:\n> » ${usuario}`,
       tipo: 'texto'
     },
     24: {
-      mensaje: `✦ Descripción Modificada ✦\n➥ Usuario: ${usuario}\n➥ Nueva descripción:\n${m.messageStubParameters?.[0] || 'Descripción no disponible'}`,
+      mensaje: `《✦》Se ha modificado la descripción del grupo.\n\n> ✧ Usuario:\n> » ${usuario}\n\n> ✧ Nueva descripción:\n> ${m.messageStubParameters?.[0] || 'Descripción no disponible'}`,
       tipo: 'texto'
     },
     25: {
-      mensaje: `✦ Configuración Cambiada ✦\n➥ Usuario: ${usuario}\n➥ Nuevo estado: ${m.messageStubParameters[0] == 'on' ? 'Solo administradores' : 'Todos los miembros'}`,
+      mensaje: `《✦》${usuario} Ha permitido que ${m.messageStubParameters[0] == 'on' ? 'solo admins' : 'todos'} puedan configurar el grupo.`,
       tipo: 'texto'
     },
     26: {
-      mensaje: `✦ Estado del Grupo Actualizado ✦\n➥ Usuario: ${usuario}\n➥ Estado: ${m.messageStubParameters[0] == 'on' ? 'Cerrado' : 'Abierto'}`,
+      mensaje: `《✦》El grupo ha sido ${m.messageStubParameters[0] == 'on' ? '*cerrado*' : '*abierto*'} Por ${usuario}\n\n> ✧ Ahora ${m.messageStubParameters[0] == 'on' ? '*solo admins*' : '*todos*'} pueden enviar mensaje.`,
       tipo: 'texto'
     },
     29: {
-      mensaje: `✦ Ascenso a Administrador ✦\n➥ Nuevo Admin: ${participants.find(p => p.id === m.messageStubParameters[0])?.name || `@${m.messageStubParameters[0].split`@`[0]}`}\n➥ Acción por: ${usuario}`,
+      mensaje: `《✦》${participants.find(p => p.id === m.messageStubParameters[0])?.name || `@${m.messageStubParameters[0].split`@`[0]}`} Ahora es admin del grupo.\n\n> ✧ Acción hecha por:\n> » ${usuario}`,
       tipo: 'texto'
     },
     30: {
-      mensaje: `✦ Remoción de Administrador ✦\n➥ Usuario afectado: ${participants.find(p => p.id === m.messageStubParameters[0])?.name || `@${m.messageStubParameters[0].split`@`[0]}`}\n➥ Cambio por: ${usuario}`,
+      mensaje: `《✦》${participants.find(p => p.id === m.messageStubParameters[0])?.name || `@${m.messageStubParameters[0].split`@`[0]}`} Deja de ser admin del grupo.\n\n> ✧ Acción hecha por:\n> » ${usuario}`,
       tipo: 'texto'
     }
   };
