@@ -2,7 +2,7 @@ import moment from 'moment-timezone';
 import fetch from 'node-fetch';
 
 // --- CONFIGURACIÓN / VARIABLES GLOBALES (ASEGÚRATE DE QUE ESTÉN DEFINIDAS) ---
-const dev = 'Tu Nombre/Grupo Dev';
+const dev = '𝑵𝒆𝒚𝒌𝒐𝒐𝒓 𝑫𝒆𝒗 💜';
 const packname = 'NombreDelPack';
 const redes = 'https://tus.redes.sociales';
 const msm = '[!]';
