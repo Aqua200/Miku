@@ -34,13 +34,16 @@ let handler = async (m, { conn, args }) => {
 ┊  ¡Convierte en un sub-bot!
 ╰┈───── ୨♡୧ ─────┈╯
 
-          𝐂𝐎𝐌𝐀𝐍𝐃𝐎𝐒 
- 
+     ✧˚ ༘ ⋆｡˚ 『 Info-Bot 』 ˚｡⋆ ༘˚✧
+
  ୨♡୧  *#uptime • #runtime*
 > ↳  Para saber cuánto tiempo llevo activa.
 
  ୨♡୧  *#sc • #script*
-> ↳  mi repositorio oficial 
+> ↳  mi repositorio oficial.
+
+୨♡୧  *#ping • #p*
+> ↳  Ver la velocidad de respuesta del Bot.
 
 `.trim();
 
