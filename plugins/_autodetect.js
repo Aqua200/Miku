@@ -90,7 +90,7 @@ export async function before(m, { conn, participants, groupMetadata }) {
       mencionesAdicionales: []
     },
     [BaileysWAMessageStubType.GROUP_PARTICIPANT_PROMOTE]: {
-      mensaje: `《✦》Nuevo Administrador《✦》\n\n> ✧ Usuario ascendido:\n> » ${targetUserName}\n\n> ✧ Acción hecha por:\n> » ${actorUserName}\n\n> ✧ Bot detector: @${botJid}`,
+      mensaje: `《✦》@${m.messageStubParameters[0].split`@`[0]} Ahora es admin del grupo.\n\n> ✧ Acción hecha por:\n> » ${actorUserName}\n\n> ✧ Bot detector: @${botJid}`,
       tipo: 'texto',
       mencionesAdicionales: targetUserJid ? [targetUserJid] : []
     },
