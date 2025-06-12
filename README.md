@@ -24,6 +24,10 @@ git clone https://github.com/Aqua200/Miku.git
 ```
 
 ```bash
+cd Miku
+```
+
+```bash
 yarn install
 ```
 
