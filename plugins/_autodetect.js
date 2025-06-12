@@ -64,44 +64,44 @@ export async function before(m, { conn, participants, groupMetadata }) {
   
   const eventos = {
     [BaileysWAMessageStubType.GROUP_CHANGE_SUBJECT]: {
-      mensaje: `《✦》Cambio de Nombre del Grupo《✦》\n\n> ✧ Acción hecha por:\n> » ${actorUserName}\n\n> ✧ Nuevo nombre:\n> » *${m.messageStubParameters[0]}*\n\n> ✧ Bot detector: @${botJid}`,
+      mensaje: `Cambio de Nombre del Grupo《✦》\n\n> ✧ Acción hecha por:\n> » ${actorUserName}\n\n> ✧ Nuevo nombre:\n> » *${m.messageStubParameters[0]}*\n\n> ✧ Bot detector: @${botJid}`,
       tipo: 'texto',
       mencionesAdicionales: []
     },
     [BaileysWAMessageStubType.GROUP_CHANGE_ICON]: {
-      mensaje: `《✦》Cambio de Imagen del Grupo《✦》\n\n> ✧ Acción hecha por:\n> » ${actorUserName}\n\n> ✧ Bot detector: @${botJid}`,
+      mensaje: `Cambio de Imagen del Grupo《✦》\n\n> ✧ Acción hecha por:\n> » ${actorUserName}\n\n> ✧ Bot detector: @${botJid}`,
       tipo: 'imagen',
       imagen: pp,
       mencionesAdicionales: []
     },
     [BaileysWAMessageStubType.GROUP_CHANGE_DESCRIPTION]: {
-      mensaje: `《✦》Cambio de Descripción del Grupo《✦》\n\n> ✧ Acción hecha por:\n> » ${actorUserName}\n\n> ✧ Nueva descripción:\n> » ${m.messageStubParameters?.[0] || 'Descripción no disponible'}\n\n> ✧ Bot detector: @${botJid}`,
+      mensaje: `Cambio de Descripción del Grupo《✦》\n\n> ✧ Acción hecha por:\n> » ${actorUserName}\n\n> ✧ Nueva descripción:\n> » ${m.messageStubParameters?.[0] || 'Descripción no disponible'}\n\n> ✧ Bot detector: @${botJid}`,
       tipo: 'texto',
       mencionesAdicionales: []
     },
     [BaileysWAMessageStubType.GROUP_CHANGE_RESTRICT]: {
-      mensaje: `《✦》Ajustes de Grupo Modificados《✦》\n\n> ✧ Acción hecha por:\n> » ${actorUserName}\n\n> ✧ Ahora ${m.messageStubParameters[0] == 'on' || m.messageStubParameters[0] === true ? '*solo administradores*' : '*todos los participantes*'} pueden editar la información del grupo.\n\n> ✧ Bot detector: @${botJid}`,
+      mensaje: `Ajustes de Grupo Modificados《✦》\n\n> ✧ Acción hecha por:\n> » ${actorUserName}\n\n> ✧ Ahora ${m.messageStubParameters[0] == 'on' || m.messageStubParameters[0] === true ? '*solo administradores*' : '*todos los participantes*'} pueden editar la información del grupo.\n\n> ✧ Bot detector: @${botJid}`,
       tipo: 'texto',
       mencionesAdicionales: []
     },
     [BaileysWAMessageStubType.GROUP_CHANGE_ANNOUNCE]: {
-      mensaje: `《✦》Ajustes de Envío de Mensajes《✦》\n\n> ✧ Acción hecha por:\n> » ${actorUserName}\n\n> ✧ El grupo ha sido ${m.messageStubParameters[0] == 'on' || m.messageStubParameters[0] === true ? '*CERRADO*' : '*ABIERTO*'}.\n> ✧ Ahora ${m.messageStubParameters[0] == 'on' || m.messageStubParameters[0] === true ? '*solo administradores*' : '*todos los participantes*'} pueden enviar mensajes.\n\n> ✧ Bot detector: @${botJid}`,
+      mensaje: `Ajustes de Envío de Mensajes《✦》\n\n> ✧ Acción hecha por:\n> » ${actorUserName}\n\n> ✧ El grupo ha sido ${m.messageStubParameters[0] == 'on' || m.messageStubParameters[0] === true ? '*CERRADO*' : '*ABIERTO*'}.\n> ✧ Ahora ${m.messageStubParameters[0] == 'on' || m.messageStubParameters[0] === true ? '*solo administradores*' : '*todos los participantes*'} pueden enviar mensajes.\n\n> ✧ Bot detector: @${botJid}`,
       tipo: 'texto',
       mencionesAdicionales: []
     },
     [BaileysWAMessageStubType.GROUP_PARTICIPANT_PROMOTE]: {
-      mensaje: `《✦》@${m.messageStubParameters[0].split`@`[0]} Ahora es admin del grupo.\n\n> ✧ Acción hecha por:\n> » ${actorUserName}\n\n> ✧ Bot detector: @${botJid}`,
+      mensaje: ` @${m.messageStubParameters[0].split`@`[0]} Ahora es admin del grupo.\n\n> ✧ Acción hecha por:\n> » ${actorUserName}\n\n> ✧ Bot detector: @${botJid}`,
       tipo: 'texto',
       mencionesAdicionales: targetUserJid ? [targetUserJid] : []
     },
     [BaileysWAMessageStubType.GROUP_PARTICIPANT_DEMOTE]: {
-      mensaje: `《✦》Admin Degradado《✦》\n\n> ✧ Usuario degradado:\n> » ${targetUserName}\n\n> ✧ Acción hecha por:\n> » ${actorUserName}\n\n> ✧ Bot detector: @${botJid}`,
+      mensaje: `Admin Degradado《✦》\n\n> ✧ Usuario degradado:\n> » ${targetUserName}\n\n> ✧ Acción hecha por:\n> » ${actorUserName}\n\n> ✧ Bot detector: @${botJid}`,
       tipo: 'texto',
       mencionesAdicionales: targetUserJid ? [targetUserJid] : []
     },
     
     [BaileysWAMessageStubType.GROUP_CHANGE_INVITE_LINK]: { // Esta es la constante más probable para el cambio de enlace
-      mensaje: `《✦》Enlace del Grupo Restablecido《✦》\n\n> ✧ Acción hecha por:\n> » ${actorUserName}\n\n> ✧ Bot detector: @${botJid}`,
+      mensaje: `Enlace del Grupo Restablecido《✦》\n\n> ✧ Acción hecha por:\n> » ${actorUserName}\n\n> ✧ Bot detector: @${botJid}`,
       tipo: 'texto',
       mencionesAdicionales: []
     }
@@ -111,7 +111,7 @@ export async function before(m, { conn, participants, groupMetadata }) {
   if (m.messageStubType === 23 && !eventos[BaileysWAMessageStubType.GROUP_CHANGE_INVITE_LINK]) {
     
     eventos[23] = { 
-      mensaje: `《✦》Enlace del Grupo Modificado/Restablecido《✦》\n\n> ✧ Acción hecha por:\n> » ${actorUserName}\n\n> ✧ Bot detector: @${botJid}`,
+      mensaje: `Enlace del Grupo Modificado/Restablecido《✦》\n\n> ✧ Acción hecha por:\n> » ${actorUserName}\n\n> ✧ Bot detector: @${botJid}`,
       tipo: 'texto',
       mencionesAdicionales: []
     };
