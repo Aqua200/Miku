@@ -2,7 +2,7 @@
 
 <h1 align="center">✦ Miku-Bot ✦</h1>
 
- <img src= "">
+ <img src= "https://files.catbox.moe/nztevm.jpeg">
     </p>
 
 ### **`❕️ Información importante`**
