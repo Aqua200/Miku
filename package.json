@@ -1,7 +1,7 @@
 {
 "name": "Miku",
 "version": "2.2.0",
-"description": "Super WhatsApp Bot Multi Device",
+"description": "WhatsApp Bot Multi Device",
 "main": "index.js",
 "type": "module",
 "directories": {
@@ -18,20 +18,20 @@
 "eslint": "eslint .",
 "eslintfix": "eslint --fix ."
 },
-"homepage": "https://github.com/Aqua200/Miku",
+"homepage": "https://github.com/The-King-Destroy/Yuki_Suou-Bot",
 "author": {
-"name": "Neykoor"
+"name": "The-King-Destroy"
 },
 "repository": {
 "type": "git",
-"url": "git+https://github.com/Aqua200/Miku.git"
+"url": "git+https://github.com/The-King-Destroy/Yuki_Suou-Bot.git"
 },
 "bugs": {
-"url": "https://github.com/Aqua200/Miku.git"
+"url": "https://github.com/The-King-Destroy/Yuki_Suou-Bot/issues"
 },
-"license": "GPL-3.0-or-later",
+"license": "MIT-License",
 "dependencies": {
-"@whiskeysockets/baileys": "github:ds6/meta",
+"@whiskeysockets/baileys": "github:nstar-y/bail",
 "@adiwajshing/keyed-db": "^0.2.4",
 "@bochilteam/scraper": "^4.2.4",
 "@bochilteam/scraper-sosmed": "^1.0.5",
